@@ -1,0 +1,18 @@
+{
+  "name": "Price_Calc",
+  "version": "1.0.0",
+  "productName": "Price Calc",
+  "description": "This is a cross-platform for automatic price calculation.",
+  "main": "main-min.js",
+  "author": "Abhilash K R <abhilash.khokle@gmail.com>",
+  "license": "ISC",
+  "scripts": {
+    "start": "electron ."
+  },
+  "dependencies": {
+    "electron": "^1.6.11",
+    "jquery": "^3.2.1",
+    "nedb": "^1.8.0",
+    "xlsx": "^0.10.8"
+  }
+}

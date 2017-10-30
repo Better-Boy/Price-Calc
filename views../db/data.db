@@ -1,0 +1,4 @@
+{"channel_name":"A","brand":"B","percentage":".9","exchange":true,"tax":true,"_id":"pricingab","type":"pricing"}
+{"min_cost":"2","max_cost":"3","extra_cost":"9","channel_name":"A","type":"shipping","_id":"XqsMMajXTdakzmVm"}
+{"type":"etr","channel_name":"A","tax_rate":"12","exchange_rate":"23","_id":"etrA"}
+{"min_cost_cost":"2","max_cost_cost":"2","percent_cost":"12","channel_name":"A","type":"cost","_id":"xw3Px0dWJ8EN2XYc"}

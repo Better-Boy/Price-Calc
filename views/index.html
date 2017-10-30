@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Price Calc</title>
+        <script> 
+            window.nodeRequire = require; 
+            delete window.exports; delete window.module;
+        </script>
+        <script src= "../js/jquery.js"></script>
+        <script src= "../js/bootstrap.min.js"></script> 
+        <link rel="stylesheet" href = "../css/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href = "../css/css/bootstrap-select.min.css"/>
+        <script src="../js/bootstrap-select.min.js"></script>
+    <style>
+        input {
+        max-width: 100%;
+        }
+
+      @font-face {
+        font-family: Poiretone;
+        src: url('../css/fonts/PoiretOne-Regular.ttf');
+      }
+      @font-face {
+        font-family: 'Glyphicons Halflings';
+        src: url('../css/fonts/glyphicons-halflings-regular.eot');
+        src: url('../css/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../css/fonts/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../css/fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular') format('svg');
+    }
+      .common {
+        font-family: Poiretone;
+      }
+      .head {
+        font-size: 5em;
+        font-weight: bold;
+      }
+      .data {
+        font-weight: bold;
+        font-size: 17px;
+      }
+      .inner {
+       position: absolute;
+       width: 50%;
+       top: 50%;
+       left: 27%;
+      }
+      .set_width {
+         width: 200px;
+         word-break: break-all;
+      }
+     </style>
+    </head>
+    <body>
+<br><br>  
+  <div class="container">
+  <h1 class="text-center head common" > Price Calc </h1>
+  </div><br><br>
+  <div class="container">
+  <ul class="nav nav-tabs nav-justified">
+    <li class="active data"><a data-toggle="tab" href="#home"><span class="glyphicon glyphicon-book"></span> Documentation</a></li>
+    <li class="data"><a data-toggle="tab" href="#upload"><span class="glyphicon glyphicon-cloud-upload"></span> File Upload</a></li>
+    <li class="data"><a data-toggle="tab" href="#update"><span class="glyphicon glyphicon-edit"></span> Edit Options</a></li>
+  </ul>
+  </div>
+
+
+
+  <div class="tab-content">
+    <div id="home" class="tab-pane fade in active">
+      <br>
+      <h1 class="text-center">Price Calc</h1><br>
+      <div class="container text-center">
+      <p style="font-size:1.5em;"> Price Calc is a stand alone cross platform application built for automatic<br> calculation of pricing for different channels and different brands.</p><br>
+      <h2> Features</h2>
+      </div>
+    <table class="table table-bordered table-striped table-hover" align="center" style="width:80%"><br>
+        <thead>
+          <th class="text-center"> Options </th>
+          <th class="text-center"> Description</th>
+        </thead>
+        <tbody>
+          <tr><td colspan="2" class="text-center"><b> Applies to PRICING, SHIPPING, EXCHANGE AND TAX RATES, COST CONSTRAINTS </b></td></tr>
+          <tr><td class="set_width text-center"> View </td>
+          <td class="set_width">
+            <ul>
+              <li> Go to View tab in Pricing tab</li>
+              <li> Click on 'REFRESH' Button</li>
+              <li> The drop down box will be populated with the Channels </li>
+              <li> Select a channel of your interest from the drop box </li>
+              <li> Click 'SEARCH' Button </li>
+              <li> The Search results will be appear below within a table.</li>
+            </ul>
+          </td>
+          </tr>
+          <tr><td class="set_width text-center"> Add / Update </td> 
+          <td class="set_width"> 
+            <ul>
+              <li> Go to 'Add / Update' tab in Pricing tab</li>
+              <li> To Add ,fill the input boxes and then, click 'ADD' Button.</li>
+              <li> If successful, a success message will be shown below</li>
+              <li> To Update, fill the input boxes, click 'UPDATE' Button </li>
+              <li> If successful, a success message will be shown below </li>
+            </ul>
+          </td></tr>
+          <tr><td class="set_width text-center"> Delete </td>
+          <td class="set_width">
+            <ul>
+              <li> Go to Delete tab of Pricing</li>
+              <li> Enter the channel and brand name in the input boxes</li>
+              <li> Click Delete and the enter will be deleted</li>
+            </ul>
+          </td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div id="upload" class="tab-pane fade">
+      <div class="inner">
+      <div style="height:50%"><h5>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbspNote ** : The File format should be <b>Category, Model, Brand, CostUSD</b></h5></div>
+      <h1 class="text-center">Please Upload the File </h1><br>
+      <div class="text-center">
+      <button onclick="upload()" class="btn btn-default"><span class="glyphicon glyphicon-upload"></span>&nbspUPLOAD</button>
+      <button onclick="save()" class="btn btn-default" id="save" style="display:none"><span class="glyphicon glyphicon-download"></span> DOWNLOAD</button><br><br>
+      <div class="progress" style="display:none" id="progress_wrapper">
+        <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" id="progress"  aria-valuemin="0" aria-valuemax="100">
+        </div>
+    </div>
+      <p id="upload_p" style="display:none"></p>
+      </div>
+      </div><br>
+    </div>
+    <div id="update" class="tab-pane fade in">
+
+      <div class="container">
+  <br>
+  <br>
+  <ul class="nav nav-pills nav-justified">
+    <li class="active"><a data-toggle="pill" href="#price"> Pricing</a></li>
+    <li><a data-toggle="pill" href="#ship"> Shipping</a></li>
+    <li><a data-toggle="pill" href="#etr">Exchange and Tax Rates</a></li>
+    <li><a data-toggle="pill" href="#cost">Cost Constraints</a></li>
+  </ul>
+      </div>
+
+      <div class="tab-content">
+        <div id="cost" class="tab-pane fade in"><br>
+            <div class="container">
+          <br>
+        <br>
+        <ul class="nav nav-tabs nav-justified">
+        <li class="active"><a data-toggle="tab" href="#cost_view"> View</a></li>
+        <li><a data-toggle="tab" href="#cost_au"> Add </a></li>
+        <li><a data-toggle="tab" href="#cost_delete"> Delete</a></li>
+        </ul>
+          </div>
+          <div class="tab-content">
+            
+
+            <div id="cost_view" class="text-center tab-pane fade in active"><br><br>
+    <h2>View Cost Constraints</h2><br>
+    <button onclick="cost_view()" class="btn btn-default"><span class="glyphicon glyphicon-refresh"></span> REFRESH</button><br><br>
+    <div class="container">
+     <table id="cost_rules" class="table table-bordered text-center table-striped table-hover">
+              <thead>
+                <th class="text-center"> Channel Name </th>
+                <th class="text-center"> Cost Range (in $) </th>
+                <th class="text-center"> New Percentage Rate</th>
+              </thead>
+              <tbody>
+              </tbody>
+      </table><br><br>
+    </div>
+            </div>
+
+            <div id="cost_au" class="tab-pane fade in text-center"><br>
+      <h2>Add Cost Constraint</h2><br><br>
+      <form class="form-inline" id="new_cost_form">
+      <div class="form-group">
+      <label for="shipping_channel">Channel Name</label>
+      <input type="text" class="form-control" id="channel_cost" placeholder=" Channel Name">
+      </div>
+      <div class="form-group">
+      <label for="Minimum Cost">Minimum Cost</label>
+      <input type="number" step="0.01" class="form-control" id="min_cost_cost" placeholder=" Minimum Cost">
+      </div>
+      <div class="form-group">
+      <label for="Maximum Cost">Maximum Cost</label>
+      <input type="number" step="0.01" class="form-control" id="max_cost_cost" placeholder=" Maximum Cost">
+      </div>
+      <div class="form-group">
+      <label for="Extra Cost">New Percentage Rate</label>
+      <input type="number" step="0.01" class="form-control" id="percent_cost" placeholder=" New Percentage Rate">
+      </div>
+      </form><br>
+    <button onclick="add_cost_constraint()" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> Add Constraint</button><br><br>
+    <div class="container">
+    <p id="result_cost"></p>
+    <p id="cost_p" style="display:none"></p>
+    </div>
+            </div>
+
+            <div id="cost_delete" class="tab-pane fade in text-center"><br>
+      <h2>Delete Cost Constraint</h2><br><br>
+      <form class="form-inline">
+      <div class="form-group">
+      <label for="Minimum Cost">Channel Name</label>
+      <input type="text" step="0.01" class="form-control" id="channel_delete_cost" placeholder=" Channel">
+      </div>
+      </form><br>
+    <button onclick="delete_cost_constraint()" class="btn btn-default"><span class="glyphicon glyphicon-remove-sign"></span>  Remove Constraint</button><br><br>
+    <div class="container">
+    <p id="delete_cost_p"></p>
+    </div>
+    </div>
+
+          </div>
+        </div>
+
+        <div id="price" class="tab-pane fade in active"><br>
+          <div class="container">
+        <br>
+        <ul class="nav nav-tabs nav-justified">
+        <li class="active"><a data-toggle="tab" href="#pricing_view"> View</a></li>
+        <li><a data-toggle="tab" href="#pricing_au"> Add / Update </a></li>
+        <li><a data-toggle="tab" href="#pricing_delete"> Delete</a></li>
+        </ul>
+          </div>
+        
+        <div class="tab-content">
+
+
+          <div id="pricing_view" class="text-center tab-pane fade in active"><br><br>
+      <h2>View Pricing</h2><br>
+            <form class="form-inline">
+            <div class="form-group"><br>
+            <label> Select a Channel</label>
+            <select id="view_select_channel">
+            </select>
+            </div><br><br>
+            </form>
+          <button onclick="search()" class="btn btn-default"><span class="glyphicon glyphicon-search"></span> SEARCH</button>
+          <button onclick="pricing_view()" class="btn btn-default"><span class="glyphicon glyphicon-refresh"></span> REFRESH</button><br>
+          <div class="container">
+          <table class="table table-hover table-bordered table-striped" id="table_view_search" style="display:none"><br>
+            <thead>
+              <th class="text-center">Brand</th>
+              <th class="text-center">Pricing Formula</th>
+            </thead>
+            <tbody>
+            </tbody>
+          </table><br><br>
+          </div>
+    </div>
+
+    <!-- Pricing Add / Update -->
+    <div id="pricing_au" class="text-center tab-pane fade in">
+      <br>
+      <h2>Add / Update New Pricing</h2><br>
+      <br>
+      <form class="form-inline" id="new_pricing_form">
+      <div class="form-group">
+      <label for="location">Channel Name</label>
+      <input type="text" class="form-control" id="channel_name" placeholder=" Channel Name">
+      </div>    
+      <div class="form-group">
+      <label for="brand">Brand Name</label>
+      <input type="text" class="form-control" id="brand" placeholder=" Brand Name">
+      </div> 
+      <div class="form-group">
+        <label for="percentage">Percentage Rate</label>
+        <input type="number" step="0.01" class="form-control" id="percentage" placeholder=" Percentage">
+      </div><br>
+      <div class="checkbox-inline"><br>
+      <label><input id="exchange_checkbox" type="checkbox"> Include Exchange Rate</label>
+      </div>
+      <div class="checkbox-inline"><br>
+      <label><input id="tax_checkbox" type="checkbox"> Include Tax Rate</label>
+      </div>
+      <div class="checkbox-inline"><br>
+      <label><input id="multiple_checkbox" type="checkbox"> Change Multiple in ceiling (default 10)</label>
+      </div><br><br>
+      <div class="form-group" style="display:none" id="multiple_div">
+        <label for="multiple">Multiple Value</label>
+        <input type="number" step="0.01" class="form-control" id="multiple" placeholder=" Multiple">
+      </div><br>
+        </form><br>
+    <button onclick="add_new_pricing()" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> ADD</button>
+    <button onclick="update_pricing()" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span> UPDATE</button><br><br>
+    <div class="container">
+    <p id="result_formula"></p><br>
+    <p id="fail" style="display:none"></p>
+    </div>
+      </div>
+
+      <!-- Pricing Delete -->
+    <div id="pricing_delete" class="text-center tab-pane fade in"><br><br>
+      <h2>Delete Pricing</h2><br>
+        <form class="form-inline">
+      <div class="form-group">
+      <label for="Channel">Channel Name</label>
+      <input type="text" class="form-control" id="delete_pricing_channel" placeholder=" Channel Name">
+      </div>
+    <div class="form-group">
+      <label for="Brand">Brand Name</label>
+      <input type="text" class="form-control" id="delete_pricing_brand" placeholder=" Brand Name">
+      </div>
+        </form><br>
+    <button onclick="delete_pricing()" class="btn btn-default"><span class="glyphicon glyphicon-remove-circle"></span> REMOVE</button><br><br>
+    <div class="container">
+      <p id="delete_pricing_p"></p>
+    </div>
+    </div>
+        
+        </div>
+
+        </div>
+
+
+        <div id="ship" class="tab-pane fade"><br>
+          <div class="container">
+          <br>
+        <br>
+        <ul class="nav nav-tabs nav-justified">
+          <li class="active"><a data-toggle="tab" href="#shipping_view"> View</a></li>
+          <li><a data-toggle="tab" href="#shipping_au"> Add</a></li>
+          <li><a data-toggle="tab" href="#shipping_delete"> Delete</a></li>
+        </ul>
+          </div>
+
+
+        <div class="tab-content">
+
+          <div id="shipping_view" class="text-center tab-pane fade in active"><br><br>
+    <h2>View Shipping</h2><br>
+    <button onclick="shipping_view()" class="btn btn-default"><span class="glyphicon glyphicon-refresh"></span> REFRESH</button><br><br>
+    <div class="container">
+     <table id="shipping_rules" style="display:none" class="table table-bordered text-center table-striped table-hover">
+              <thead>
+                <th class="text-center"> Channel Name </th>
+                <th class="text-center"> Cost Range (in $) </th>
+                <th class="text-center"> Extra Cost (in $)</th>
+              </thead>
+              <tbody>
+              </tbody>
+      </table><br><br>
+    </div>
+   </div>
+        <div id="shipping_au" class="tab-pane fade in text-center"><br>
+      <h2>Add New Shipping Rule</h2><br><br>
+      <form class="form-inline" id="new_shipping_form">
+      <div class="form-group">
+      <label for="shipping_channel">Channel</label>
+      <input type="text" class="form-control" id="channel_shipping" placeholder=" Channel">
+      </div>
+      <div class="form-group">
+      <label for="Minimum Cost">Minimum Cost</label>
+      <input type="number" step="0.01" class="form-control" id="min_cost" placeholder=" Minimum Cost">
+      </div>
+      <div class="form-group">
+      <label for="Maximum Cost">Maximum Cost</label>
+      <input type="number" step="0.01" class="form-control" id="max_cost" placeholder=" Maximum Cost">
+      </div>
+      <div class="form-group">
+      <label for="Extra Cost">Extra Cost</label>
+      <input type="number" step="0.01" class="form-control" id="extra_cost" placeholder=" Extra Cost">
+      </div>
+      </form><br>
+    <button onclick="add_shipping_rule()" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> ADD RULE</button><br><br>
+    <div class="container">
+    <p id="result_shipping"></p>
+    <p id="shipping_p" style="display:none"></p>
+    </div>
+    </div>
+
+      <div id="shipping_delete" class="tab-pane fade in text-center"><br>
+      <h2>Delete Shipping Rule</h2><br><br>
+      <form class="form-inline">
+      <div class="form-group">
+      <label for="Minimum Cost">Channel Name</label>
+      <input type="text" step="0.01" class="form-control" id="channel_delete" placeholder=" Channel">
+      </div>
+      </form><br>
+    <button onclick="delete_shipping_rule()" class="btn btn-default"><span class="glyphicon glyphicon-remove-sign"></span>  REMOVE RULE</button><br><br>
+    <div class="container">
+    <p id="delete_shipping_p"></p>
+    </div>
+    </div>
+
+        </div>
+          
+        </div>
+
+        <div id="etr" class="tab-pane fade"><br>
+          <div class="container">
+          <br>
+        <br>
+        <ul class="nav nav-tabs nav-justified">
+          <li class="active"><a data-toggle="tab" href="#etr_view"> View</a></li>
+          <li><a data-toggle="tab" href="#etr_au"> Add</a></li>
+          <li><a data-toggle="tab" href="#etr_delete"> Delete</a></li>
+        </ul>
+          </div>
+        
+          <div class="tab-content"><br>
+            <div id="etr_view" class="tab-pane fade in text-center active">
+            <h2>View Exchange and Tax Rates</h2><br>
+            <form class="form-inline">
+            <div class="form-group"><br>
+            <label> Select a Channel</label>
+            <select id="view_select_channel_etr">
+            </select>
+            </div><br><br>
+            </form>
+          <button onclick="etr_search()" class="btn btn-default"><span class="glyphicon glyphicon-search"></span> SEARCH</button>
+          <button onclick="etr_view()" class="btn btn-default"><span class="glyphicon glyphicon-refresh"></span> REFRESH</button><br>
+          <div class="container">
+          <table class="table table-hover table-bordered table-striped" id="table_view_search_etr" style="display:none"><br>
+            <thead>
+              <th class="text-center">Brand</th>
+              <th class="text-center">Exchange Rate</th>
+              <th class="text-center">Tax Rate</th>
+            </thead>
+            <tbody>
+            </tbody>
+          </table><br><br>
+          </div>
+            </div>
+
+            <div id="etr_au" class="tab-pane fade text-center">
+              <h2>Add New Exchange and Tax Rates</h2><br>
+              <p class="container alert alert-warning"><b>* Not Applicable fields should be left blank</b></p>
+              <form class="form-inline" id="etr_add_form">
+      <div class="form-group">
+      <label for="channel">Channel</label>
+      <input type="text" class="form-control" id="channel_etr" placeholder=" Channel Name">
+      </div>
+      <div class="form-group">
+      <label for="etr_exchange">Exchange Rate</label>
+      <input type="number" step="0.01" class="form-control" id="exchange_rate" placeholder=" Exchange Rate">
+      </div>
+      <div class="form-group">
+      <label for="tax">Tax Rate</label>
+      <input type="number" step="0.01" class="form-control" id="tax_rate" placeholder=" Tax Rate">
+      </div>
+      </form><br>
+    <button onclick="add_etr()" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> ADD RULE</button><br><br>
+    <div class="container"><p id="etr_p"></p></div>
+            </div>
+
+            <div id="etr_delete" class="tab-pane fade text-center">
+              <h2>Delete Exchange and Tax Rates</h2><br>
+              <form class="form-inline" id="etr_delete_form">
+      <div class="form-group">
+      <label for="channel">Channel</label>
+      <input type="text" class="form-control" id="channel_etr_delete" placeholder=" Channel Name">
+      </div>
+      </form><br>
+    <button onclick="delete_etr()" class="btn btn-default"><span class="glyphicon glyphicon-remove"></span> DELETE RULE</button><br><br>
+    <div class="container">
+    <p id="etr_p_delete"></p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="../js/script-min.js"></script>
+    </body>
+</html>

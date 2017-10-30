@@ -1,0 +1,10 @@
+{"min_cost_cost":"1000","max_cost_cost":"10000000","percent_cost":"0.32","channel_name":"Amazon","type":"cost","_id":"46FLtqnWshbrf8c9"}
+{"min_cost":"500","max_cost":"2000","extra_cost":"50","channel_name":"Amazon","type":"shipping","_id":"9Ejlyzyao1bqpxUy"}
+{"min_cost":"0","max_cost":"100","extra_cost":"10","channel_name":"Amazon","type":"shipping","_id":"BlDgLUwVaIPaEcV9"}
+{"min_cost":"100","max_cost":"500","extra_cost":"20","channel_name":"PARK","type":"shipping","_id":"HDh8whjmqnvNt9uX"}
+{"min_cost":"2000","max_cost":"10000000","extra_cost":"200","channel_name":"Amazon","type":"shipping","_id":"LxD2D68oJ0dRpW9Y"}
+{"min_cost":"100","max_cost":"500","extra_cost":"20","channel_name":"Amazon","type":"shipping","_id":"e4Z1JIiuNz7zK7Rg"}
+{"channel_name":"a","brand":"b","multiple":"100","percentage":"0.4","_id":"pricingab","type":"pricing"}
+{"channel_name":"Amazon","brand":"Casio","percentage":"0.30","_id":"pricingamazoncasio","type":"pricing"}
+{"channel_name":"Amazon","brand":"Citizen","percentage":"0.30","_id":"pricingamazoncitizen","type":"pricing"}
+{"channel_name":"Amazon","brand":"IWC","percentage":"0.30","_id":"pricingamazoniwc","type":"pricing"}
